@@ -31,6 +31,15 @@ public class EntityNPCPlayer extends EntityPlayer {
 		setPosition(location.getX(), location.getY(), location.getZ());
 	}
 	
+		public EntityNPCPlayer(NPC npc, Location location, GameProfile game) {
+		super(NMS.getServer(), NMS.getHandle(location.getWorld()), game, new PlayerInteractManager(NMS.getHandle(location.getWorld())));
+		playerInteractManager.b(EnumGamemode.SURVIVAL); //MCP = initializeGameType ---- SRG=func_73077_b
+		this.npc = npc;
+		playerConnection = new NPCConnection(this);
+		
+		setPosition(location.getX(), location.getY(), location.getZ());
+	}
+	
 	@Override
 	public boolean damageEntity(DamageSource source, float damage) {
 		if (npc.isProtected()) {
