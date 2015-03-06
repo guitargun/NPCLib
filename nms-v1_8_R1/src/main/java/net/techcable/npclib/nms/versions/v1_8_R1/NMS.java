@@ -91,6 +91,16 @@ public class NMS implements net.techcable.npclib.nms.NMS {
     	return player.getBukkitEntity();
     }
     
+        @Override
+    public Player spawnPlayer(Location toSpawn, GameProfile game, NPC npc) {
+    	EntityNPCPlayer player = new EntityNPCPlayer(npc, toSpawn, game);
+    	sendPacketsTo(Bukkit.getOnlinePlayers(), new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, player));
+    	WorldServer world = getHandle(toSpawn.getWorld());
+    	world.addEntity(player);
+    	look(player.getBukkitEntity(), toSpawn.getPitch(), toSpawn.getYaw());
+    	return player.getBukkitEntity();
+    }
+    
     public static Entity getHandle(org.bukkit.entity.Entity bukkitEntity) {
         if (!(bukkitEntity instanceof CraftEntity))
             return null;
